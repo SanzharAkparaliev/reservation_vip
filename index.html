@@ -248,6 +248,7 @@
 
     function toggleFlightType(selectedType) {
       flightType = selectedType;
+      updateCost(selectedType);
 
       if (selectedType === "international") {
         internationalBtn.classList.add("bg-white");
