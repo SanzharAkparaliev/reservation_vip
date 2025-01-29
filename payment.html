@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+      rel="stylesheet"
+    />
+    <title>Payment</title>
+  </head>
+
+  <body>
+    <div
+      class="background-container min-h-screen flex items-center justify-center w-full bg-[#111728]"
+    >
+      <div
+        class="mx-auto px-4 flex justify-center flex-col w-[90%] sm:w-[500px]"
+      >
+        <div class="mx-auto px-4 flex justify-center flex-col w-[100%] mb-7">
+          <h1 class="text-center text-3xl font-bold text-white">
+            Оплата заказа
+          </h1>
+          <h3 class="text-center text-2xl font-medium text-[#397cee]">
+            12345.67 сом
+          </h3>
+        </div>
+
+        <div
+          class="w-full bg-gray-200 rounded-lg p-0 flex flex-wrap justify-between gap-2 mb-7"
+        >
+          <button
+            id="payment-card-btn"
+            class="flex-1 min-w-[150px] py-2 rounded-lg bg-white text-gray-700 font-semibold shadow-sm focus:outline-none flex items-center justify-center gap-2"
+            onclick="togglePaymentType('payment-card')"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 7.5h19.5m-19.5 0v9.75A1.5 1.5 0 0 0 3.75 18.75h16.5a1.5 1.5 0 0 0 1.5-1.5V7.5m-19.5 0V5.25A1.5 1.5 0 0 1 3.75 3.75h16.5a1.5 1.5 0 0 1 1.5 1.5V7.5m-9.75 6h3.75"
+              />
+            </svg>
+            Картой
+          </button>
+
+          <button
+            id="qr-code-btn"
+            class="flex-1 min-w-[150px] py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold shadow-sm focus:outline-none flex items-center justify-center gap-2"
+            onclick="togglePaymentType('qr-code')"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 3.75h3.75v3.75H3.75V3.75zm12.75 0h3.75v3.75h-3.75V3.75zm0 12.75h3.75v3.75h-3.75v-3.75zM3.75 16.5h3.75v3.75H3.75v-3.75zm6-12h4.5v4.5h-4.5v-4.5zm0 6h1.5v1.5H9.75V10.5zm3 0h1.5v1.5h-1.5V10.5zm-3 3h1.5v1.5H9.75v-1.5zm3 0h1.5v1.5h-1.5v-1.5zm0 3h1.5v1.5h-1.5v-1.5z"
+              />
+            </svg>
+            QR-код
+          </button>
+        </div>
+
+        <div
+          id="qr-code-container"
+          class="container w-[100%] bg-white rounded-lg shadow-lg p-8 hidden"
+        >
+          <h1 for="date" class="text-2xl font-medium text-center mb-3">
+            Оплата по QR-коду
+          </h1>
+
+          <div class="bg-[#f3f4f6] px-7 py-2 mb-3">
+            <img
+              src="./assets/images/qr-code.svg"
+              alt="qr-code"
+              width="300"
+              height="300"
+              class="mx-auto"
+            />
+          </div>
+
+          <p class="text-center font-medium">
+            Отсканируйте QR-код с помощью банковского приложения для оплаты
+          </p>
+        </div>
+
+        <div
+          id="payment-card-container"
+          class="container w-[100%] bg-white rounded-lg shadow-lg p-8"
+        >
+          <form action="#" method="POST" class="space-y-4">
+            <div class="w-full flex flex-wrap justify-between gap-2">
+              <h1 for="date" class="text-2xl font-medium">Оплата картой</h1>
+              <div class="w-fit flex flex-wrap justify-between gap-2">
+                <img
+                  src="./assets/images/visa-svg-file.svg"
+                  alt="visa-svg"
+                  width="90"
+                  height="auto"
+                />
+                <img
+                  src="./assets/images/master-card-svg-file.svg"
+                  alt="master-card-svg"
+                  width="50"
+                  height="auto"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col space-y-2">
+              <label for="card-number" class="text-gray-700 font-bold"
+                >Номер карты</label
+              >
+              <div class="relative flex items-center">
+                <div class="absolute left-3 text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    fill="none"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M2.25 7.5h19.5m-19.5 0v9.75A1.5 1.5 0 003.75 18.75h16.5a1.5 1.5 0 001.5-1.5V7.5m-19.5 0V5.25A1.5 1.5 0 013.75 3.75h16.5a1.5 1.5 0 011.5 1.5V7.5m-9.75 6h3.75"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  id="card-number"
+                  class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-gray-700"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  inputmode="numeric"
+                  oninput="formatCardNumber(this)"
+                />
+              </div>
+            </div>
+
+            <div class="flex space-x-2">
+              <div class="flex flex-col space-y-2">
+                <label for="expiry" class="text-gray-700 font-bold"
+                  >Срок действия</label
+                >
+                <div class="relative flex items-center">
+                  <div class="absolute left-3 text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-6 h-6"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      fill="none"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10m-11 8h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+
+                  <input
+                    type="text"
+                    id="expiry"
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-gray-700"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    inputmode="numeric"
+                    oninput="formatExpiryDate(this)"
+                  />
+                </div>
+              </div>
+
+              <div class="flex flex-col space-y-2">
+                <label for="cvv" class="text-gray-700 font-bold">CVV</label>
+                <div class="relative flex items-center">
+                  <div class="absolute left-3 text-gray-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      fill="none"
+                    >
+                      <path
+                        d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z M 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 8 11 L 8 6 C 8 3.78125 9.78125 2 12 2 Z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="cvv"
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-gray-700"
+                    placeholder="***"
+                    maxlength="3"
+                    inputmode="numeric"
+                    oninput="validateCVV(this)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col space-y-2">
+              <button
+                class="w-full bg-[#397cee] text-white font-semibold py-2 rounded-lg transition"
+              >
+                Оплатить
+              </button>
+
+              <div class="flex space-x-2 items-center text-gray-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  fill="none"
+                >
+                  <path
+                    d="M 12 0 C 8.699219 0 6 2.699219 6 6 L 6 11 L 3 11 L 3 24 L 21 24 L 21 11 L 18 11 L 18 6 C 18 2.699219 15.300781 0 12 0 Z M 12 2 C 14.21875 2 16 3.78125 16 6 L 16 11 L 8 11 L 8 6 C 8 3.78125 9.78125 2 12 2 Z"
+                  ></path>
+                </svg>
+                <p>Безопасная оплата через защищённое соединение</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let paymentType = "card";
+
+      const qrBtn = document.getElementById("qr-code-btn");
+      const paymentCardBtn = document.getElementById("payment-card-btn");
+      const qrCodeContainer = document.getElementById("qr-code-container");
+      const paymentCardContainer = document.getElementById(
+        "payment-card-container"
+      );
+
+      function togglePaymentType(selectedType) {
+        paymentType = selectedType;
+        console.log(selectedType);
+
+        if (selectedType === "payment-card") {
+          paymentCardBtn.classList.add("bg-white");
+          paymentCardBtn.classList.remove("bg-gray-200");
+          qrBtn.classList.add("bg-gray-200");
+          qrBtn.classList.remove("bg-white");
+
+          qrCodeContainer.classList.add("hidden");
+          paymentCardContainer.classList.remove("hidden");
+        } else if (selectedType === "qr-code") {
+          qrBtn.classList.add("bg-white");
+          qrBtn.classList.remove("bg-gray-200");
+          paymentCardBtn.classList.add("bg-gray-200");
+          paymentCardBtn.classList.remove("bg-white");
+
+          qrCodeContainer.classList.remove("hidden");
+          paymentCardContainer.classList.add("hidden");
+        }
+      }
+
+      togglePaymentType(paymentType);
+
+      function formatCardNumber(input) {
+        let value = input.value.replace(/\D/g, "");
+
+        value = value.substring(0, 16);
+        input.value = value.replace(/(\d{4})/g, "$1 ").trim();
+      }
+
+      function formatExpiryDate(input) {
+        let value = input.value.replace(/\D/g, "");
+
+        if (value.length > 4) {
+          value = value.substring(0, 4);
+        }
+
+        if (value.length >= 2) {
+          let month = value.substring(0, 2);
+
+          if (parseInt(month, 10) > 12) {
+            month = "12";
+          }
+
+          value = month + (value.length > 2 ? "/" + value.substring(2, 4) : "");
+        }
+
+        input.value = value;
+      }
+
+      function validateCVV(input) {
+        input.value = input.value.replace(/\D/g, "").substring(0, 3);
+      }
+    </script>
+  </body>
+</html>
